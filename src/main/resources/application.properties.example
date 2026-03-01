@@ -1,0 +1,5 @@
+spring.application.name=FinAPP
+
+spring.mongodb.uri=mongodb+srv://YOUR_USER:YOUR_PASSWORD@cluster0.xxx.mongodb.net/finapp?appName=Cluster0
+
+server.port=7070
