@@ -11,5 +11,4 @@ import java.util.List;
 public interface TransactionRepository extends MongoRepository<Transaction,String> {
 
     boolean existsByTagId(String tagId);
-    List<Transaction> findByDateBetween(LocalDate from,LocalDate to);
 }

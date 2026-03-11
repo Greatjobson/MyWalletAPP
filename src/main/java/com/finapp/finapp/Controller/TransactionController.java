@@ -2,10 +2,15 @@ package com.finapp.finapp.Controller;
 
 import com.finapp.finapp.Model.Entity.Transaction;
 import com.finapp.finapp.Model.DTO.TransactionCreateDTO;
+import com.finapp.finapp.Model.TransactionType;
+import com.finapp.finapp.Repository.TagRepository;
+import com.finapp.finapp.Service.TagService;
 import com.finapp.finapp.Service.TransactionService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,24 +29,27 @@ public class TransactionController {
     public List<Transaction> filter(
             @RequestParam(required = false) String tagId,
             @RequestParam(required = false) String assetId,
+            @RequestParam(required = false) TransactionType type,
             @RequestParam(required = false) LocalDate from,
             @RequestParam(required = false) LocalDate to
     ) {
-        return transactionService.getTransaction(tagId, assetId, from, to);
+        return transactionService.getTransaction(tagId, assetId, from, to,type);
     }
 
-    @GetMapping("/")
-    public List<Transaction> findTransactionBetweenDates(@RequestParam LocalDate from, @RequestParam LocalDate to){
-        return transactionService.getTransactionBetweenDates(from,to);
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Transaction> findById(@PathVariable String id){
+
+        return ResponseEntity.ok(transactionService.findById(id));
     }
 
     @PostMapping("/post")
     public ResponseEntity<String> insertTransaction(@Valid @RequestBody TransactionCreateDTO dto){
-
         Transaction created = transactionService.createTransaction(dto);
 
         //todo
         // возварашать тело created
+        // проверку на существование тэга
         return ResponseEntity.ok("Данные верны, сохраняем!");
     }
 

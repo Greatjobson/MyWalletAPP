@@ -1,6 +1,7 @@
 package com.finapp.finapp.Model.Entity;
 
 
+import com.finapp.finapp.Model.TransactionType;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import lombok.Data;
@@ -29,5 +30,6 @@ public class Transaction {
     @CreatedDate
     private LocalDate date;
     private String note;
+    private TransactionType type;
 
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class TagService {
     private final TransactionRepository transactionRepository;
-    TagRepository tagRepository;
+    private final TagRepository tagRepository;
 
     public TagService(TagRepository tagRepository, TransactionRepository transactionRepository){
         this.tagRepository = tagRepository;
@@ -23,6 +23,15 @@ public class TagService {
 
 //todo find by id logic
 
+    public Tag findById(String id){
+        return tagRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"tag not found"));
+    }
+
+
+    public boolean existById(String id){
+        return tagRepository.existsById(id);
+    }
 
     public List<Tag> findTag(){
 

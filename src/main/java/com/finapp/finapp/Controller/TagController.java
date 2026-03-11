@@ -20,10 +20,15 @@ public class TagController {
         this.tagService = tagService;
     }
 
+    @GetMapping("{id}")
+    public Tag findById(@PathVariable String id){
+        return tagService.findById(id);
+    }
+
     @PostMapping ("")
     public ResponseEntity<String> createTag(@Valid @RequestBody TagCreatDTO tag){
         tagService.createTag(tag);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Тег успешно создан!");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Tag successfully created");
     }
 
     @GetMapping("")
@@ -36,13 +41,13 @@ public class TagController {
     @PutMapping("{id}")
     public ResponseEntity<String> updateTag(@PathVariable String id,@Valid @RequestBody TagCreatDTO dto){
         tagService.updateTag(id,dto);
-        return ResponseEntity.status(HttpStatus.OK).body("Тег успешно создан!");
+        return ResponseEntity.status(HttpStatus.OK).body("Tag successfully updated");
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteTag(@PathVariable String id){
         tagService.deleteTag(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Тег успешно deleted!");
+        return ResponseEntity.status(HttpStatus.OK).body("Tag successfully deleted");
     }
 
 }
