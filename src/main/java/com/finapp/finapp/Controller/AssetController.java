@@ -1,0 +1,53 @@
+package com.finapp.finapp.Controller;
+
+import com.finapp.finapp.Model.Entity.Asset;
+import com.finapp.finapp.Service.AssetService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/asset")
+public class AssetController {
+    AssetService assetService;
+
+    public AssetController(AssetService assetService) {
+        this.assetService = assetService;
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<Asset> createAsset(@RequestBody Asset asset){
+        Asset createdAsset = assetService.createAsset(asset);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdAsset);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Asset> findAsset(@PathVariable String id){
+        Asset asset = assetService.getAssetById(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(asset);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Asset> updateAsset(@PathVariable String id,@RequestBody Asset updatedAsset){
+        Asset asset = assetService.update(id,updatedAsset);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(asset);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(String id) {
+        assetService.delete(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("deleted");
+    }
+
+}

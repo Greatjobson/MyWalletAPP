@@ -11,4 +11,6 @@ import java.util.List;
 public interface TransactionRepository extends MongoRepository<Transaction,String> {
 
     boolean existsByTagId(String tagId);
+
+    boolean existsByAssetId(String assetId);
 }

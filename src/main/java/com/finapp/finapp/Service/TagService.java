@@ -21,11 +21,11 @@ public class TagService {
     }
 
 
-//todo find by id logic
 
     public Tag findById(String id){
-        return tagRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"tag not found"));
+        return tagRepository.findById(id).orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"tag not found")
+        );
     }
 
 

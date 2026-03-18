@@ -29,7 +29,15 @@ public class TransactionService {
     }
 
 
-
+    /**
+     * FILTRATION
+     * @param tagId
+     * @param assetId
+     * @param from
+     * @param to
+     * @param type
+     * @return List of transaction
+     */
     public List<Transaction> getTransaction(String tagId,String assetId, LocalDate from, LocalDate to, TransactionType type){
         Query query = new Query();
 
