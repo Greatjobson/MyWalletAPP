@@ -16,6 +16,8 @@ public class AssetController {
         this.assetService = assetService;
     }
 
+    //todo getAllAsset
+
     @PostMapping("/")
     public ResponseEntity<Asset> createAsset(@RequestBody Asset asset){
         Asset createdAsset = assetService.createAsset(asset);

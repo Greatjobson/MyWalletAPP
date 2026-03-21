@@ -55,6 +55,8 @@ public class TransactionService {
     }
 
 
+    //todo assetId validate
+    //todo if income it should + and if expense - of balance of asset
     public Transaction createTransaction(TransactionCreateDTO dto) {
         if(!tagService.existById(dto.getTagId())){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tag not found v1.0");

@@ -26,43 +26,51 @@ public class TransactionController {
     }
 
     @GetMapping("/filter")
-    public List<Transaction> filter(
+    public ResponseEntity<List<Transaction>> filter(
             @RequestParam(required = false) String tagId,
             @RequestParam(required = false) String assetId,
             @RequestParam(required = false) TransactionType type,
             @RequestParam(required = false) LocalDate from,
             @RequestParam(required = false) LocalDate to
     ) {
-        return transactionService.getTransaction(tagId, assetId, from, to,type);
-    }
+        List<Transaction> filteredTransactionList = transactionService
+                .getTransaction(tagId, assetId, from, to,type);
 
+        return ResponseEntity
+                .ok(filteredTransactionList);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> findById(@PathVariable String id){
 
-        return ResponseEntity.ok(transactionService.findById(id));
+        return ResponseEntity
+                .ok(transactionService.findById(id));
     }
 
     @PostMapping("/post")
-    public ResponseEntity<String> insertTransaction(@Valid @RequestBody TransactionCreateDTO dto){
-        Transaction created = transactionService.createTransaction(dto);
+    public ResponseEntity<Transaction> insertTransaction(@Valid @RequestBody TransactionCreateDTO dto){
+        Transaction createdTransaction = transactionService.createTransaction(dto);
 
-        //todo
-        // возварашать тело created
-        // проверку на существование тэга
-        return ResponseEntity.ok("Данные верны, сохраняем!");
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdTransaction);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateTransaction(@PathVariable String id,@Valid @RequestBody TransactionCreateDTO dto){
+    public ResponseEntity<String> updateTransaction(
+            @PathVariable String id,
+            @Valid @RequestBody TransactionCreateDTO dto
+    ){
         transactionService.updateTransaction(id,dto);
-        return ResponseEntity.ok("updated");
+        return ResponseEntity
+                .ok("Transaction updated");
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTransaction(@PathVariable String id){
         transactionService.deleteTransaction(id);
-        return ResponseEntity.ok("deleted");
+        return ResponseEntity
+                .ok("Transaction deleted");
     }
 }

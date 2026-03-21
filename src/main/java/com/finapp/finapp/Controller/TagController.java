@@ -21,33 +21,43 @@ public class TagController {
     }
 
     @GetMapping("{id}")
-    public Tag findById(@PathVariable String id){
-        return tagService.findById(id);
+    public ResponseEntity<Tag> findById(@PathVariable String id){
+        Tag responseTag = tagService.findById(id);
+        return ResponseEntity
+                .ok(responseTag);
     }
 
     @PostMapping ("")
-    public ResponseEntity<String> createTag(@Valid @RequestBody TagCreatDTO tag){
-        tagService.createTag(tag);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Tag successfully created");
+    public ResponseEntity<Tag> createTag(@Valid @RequestBody TagCreatDTO tag){
+        Tag createdTag = tagService.createTag(tag);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdTag);
     }
 
     @GetMapping("")
     public ResponseEntity<List<Tag>> findTag(){
 
         List<Tag> tag = tagService.findTag();
-        return ResponseEntity.status(HttpStatus.OK).body(tag);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(tag);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<String> updateTag(@PathVariable String id,@Valid @RequestBody TagCreatDTO dto){
         tagService.updateTag(id,dto);
-        return ResponseEntity.status(HttpStatus.OK).body("Tag successfully updated");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Tag successfully updated");
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteTag(@PathVariable String id){
         tagService.deleteTag(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Tag successfully deleted");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Tag successfully deleted");
     }
 
 }

@@ -19,6 +19,8 @@ public class AssetService {
         this.transactionRepository = transactionRepository;
     }
 
+    //todo проверка на реальность юзера
+    //todo enum currency корректо отобразить ошибку если туда ввели хуйню
     public Asset createAsset(Asset asset){
         return assetRepository.insert(asset);
     }
