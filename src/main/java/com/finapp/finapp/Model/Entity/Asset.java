@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 //todo date od creating and changing
+//todo посмотреть пример из гитхаба и сделать дто шки и потом сделать маппер используя ломбок.билдер
 @Document(collection = "assets")
 @Data
 public class Asset {

@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/asset")
 public class AssetController {
@@ -16,7 +18,15 @@ public class AssetController {
         this.assetService = assetService;
     }
 
-    //todo getAllAsset
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Asset>> getAllAsset(){
+        List<Asset> assets =  assetService.getAllAsset();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(assets);
+    }
 
     @PostMapping("/")
     public ResponseEntity<Asset> createAsset(@RequestBody Asset asset){
