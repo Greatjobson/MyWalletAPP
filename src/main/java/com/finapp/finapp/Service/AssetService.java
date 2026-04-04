@@ -1,6 +1,7 @@
 package com.finapp.finapp.Service;
 
 import com.finapp.finapp.Model.Entity.Asset;
+import com.finapp.finapp.Model.Entity.User;
 import com.finapp.finapp.Repository.AssetRepository;
 import com.finapp.finapp.Repository.TransactionRepository;
 import org.springframework.http.HttpStatus;
@@ -55,5 +56,9 @@ public class AssetService {
         }
 
         assetRepository.deleteById(id);
+    }
+
+    public boolean existById(String id){
+        return assetRepository.existsById(id);
     }
 }

@@ -19,13 +19,15 @@ import java.util.List;
 public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final MongoTemplate mongoTemplate;
+    private final AssetService assetService;
     TagService tagService;
 
 
-    public TransactionService(TransactionRepository transactionRepository, MongoTemplate mongoTemplate,TagService tagService) {
+    public TransactionService(TransactionRepository transactionRepository, MongoTemplate mongoTemplate, TagService tagService, AssetService assetService) {
         this.transactionRepository = transactionRepository;
         this.mongoTemplate = mongoTemplate;
         this.tagService = tagService;
+        this.assetService = assetService;
     }
 
 
@@ -58,6 +60,9 @@ public class TransactionService {
     //todo assetId validate
     //todo if income it should + and if expense - of balance of asset
     public Transaction createTransaction(TransactionCreateDTO dto) {
+        if (!assetService.existById(dto.getAssetId())){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Asset not found v1.0");
+        }
         if(!tagService.existById(dto.getTagId())){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tag not found v1.0");
         }
