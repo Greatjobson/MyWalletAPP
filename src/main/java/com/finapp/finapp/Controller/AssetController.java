@@ -3,7 +3,6 @@ package com.finapp.finapp.Controller;
 import com.finapp.finapp.Model.Entity.Asset;
 import com.finapp.finapp.Service.AssetService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +25,7 @@ public class AssetController {
 
         BigDecimal sumOfAllAssets = BigDecimal.ZERO;
         for (Asset asset : assets){
-            sumOfAllAssets = sumOfAllAssets.add(asset.getAmount());
+            sumOfAllAssets = sumOfAllAssets.add(asset.getBalance());
         }
         return ResponseEntity
                 .status(HttpStatus.OK)

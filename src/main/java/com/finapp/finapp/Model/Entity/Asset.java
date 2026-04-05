@@ -16,7 +16,7 @@ public class Asset {
     private String userId;
 
     private Currency currency;
-    private BigDecimal amount;
+    private BigDecimal balance;
     private String note;
 
 }

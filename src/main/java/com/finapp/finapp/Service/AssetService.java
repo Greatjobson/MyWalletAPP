@@ -1,13 +1,15 @@
 package com.finapp.finapp.Service;
 
 import com.finapp.finapp.Model.Entity.Asset;
-import com.finapp.finapp.Model.Entity.User;
+import com.finapp.finapp.Model.TransactionType;
 import com.finapp.finapp.Repository.AssetRepository;
 import com.finapp.finapp.Repository.TransactionRepository;
+import com.finapp.finapp.config.InsufficientFundsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -20,13 +22,10 @@ public class AssetService {
         this.transactionRepository = transactionRepository;
     }
 
-    //todo проверка на реальность юзера
-    //todo enum currency корректо отобразить ошибку если туда ввели хуйню
     public Asset createAsset(Asset asset){
         return assetRepository.insert(asset);
     }
 
-    // todo фильтрацию ассетов добавить при необходимости
     public List<Asset> getAllAsset(){
         return assetRepository.findAll();
     }
@@ -40,7 +39,7 @@ public class AssetService {
         Asset asset = assetRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"no asset with id: " + id));
 
-        asset.setAmount(assetUPDATED.getAmount());
+        asset.setBalance(assetUPDATED.getBalance());
         asset.setNote(assetUPDATED.getNote());
         asset.setCurrency(assetUPDATED.getCurrency());
 
@@ -61,4 +60,25 @@ public class AssetService {
     public boolean existById(String id){
         return assetRepository.existsById(id);
     }
+    public void updateBalance(TransactionType type, BigDecimal amount,String id){
+        Asset asset = this.getAssetById(id);
+        switch (type){
+            case EXPENSE:
+                if (asset.getBalance().compareTo(amount) < 0){
+                    throw new InsufficientFundsException("Insufficient funds");
+                }
+                asset.setBalance(
+                        asset.getBalance().subtract(amount) // баланс -
+                );
+                break;
+            case INCOME:
+                asset.setBalance(
+                        asset.getBalance().add(amount) // баланс +
+                );
+                break;
+            //хз зачем тут дефолт в свитче
+        }
+        update(id,asset);
+    }
+
 }
