@@ -57,7 +57,7 @@ public class TransactionService {
     }
 
 
-    //todo assetId validate
+
     //todo if income it should + and if expense - of balance of asset
     public Transaction createTransaction(TransactionCreateDTO dto) {
         if (!assetService.existById(dto.getAssetId())){
@@ -68,6 +68,7 @@ public class TransactionService {
         }
         Transaction entity = toTransaction(new Transaction(),dto);
 
+        assetService.updateBalance(entity.getType(),entity.getAmount(),entity.getAssetId());
         return transactionRepository.insert(entity);
     }
 
