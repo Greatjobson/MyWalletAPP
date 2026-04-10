@@ -14,7 +14,7 @@ Backend API для учёта доходов/расходов на Spring Boot +
 
 | Ресурс | URL                                    |
 |--------|----------------------------------------|
-| **Swagger UI** | http://localhost:8080/swagger-ui.html  |
+| **Swagger UI** | http://localhost:7070/swagger-ui.html    |
 | **OpenAPI JSON** | http://localhost:8080/v3/api-docs      |
 | **OpenAPI YAML** | http://localhost:7070/v3/api-docs.yaml |
 

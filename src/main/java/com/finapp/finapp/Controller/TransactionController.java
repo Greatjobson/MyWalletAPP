@@ -12,8 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/transaction")
@@ -72,5 +75,14 @@ public class TransactionController {
         transactionService.deleteTransaction(id);
         return ResponseEntity
                 .ok("Transaction deleted");
+    }
+
+
+    @GetMapping("/sums")
+    public ResponseEntity<Map<String, BigDecimal>> getSumByTag(){
+
+
+
+        return ResponseEntity.ok(transactionService.getSumByTag());
     }
 }

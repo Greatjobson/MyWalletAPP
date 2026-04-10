@@ -6,7 +6,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
-//todo посмотреть пример из гитхаба и сделать дто шки и потом сделать маппер используя ломбок.билдер
 @Document(collection = "assets")
 @Data
 public class Asset {

@@ -2,13 +2,18 @@ package com.finapp.finapp.Controller;
 
 import com.finapp.finapp.Model.DTO.TagCreatDTO;
 import com.finapp.finapp.Model.Entity.Tag;
+import com.finapp.finapp.Model.Entity.Transaction;
 import com.finapp.finapp.Service.TagService;
+import com.finapp.finapp.Service.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/tag")

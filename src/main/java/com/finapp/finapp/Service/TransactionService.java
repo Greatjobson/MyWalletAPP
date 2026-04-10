@@ -12,8 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
@@ -58,7 +61,7 @@ public class TransactionService {
 
 
 
-    //todo if income it should + and if expense - of balance of asset
+
     public Transaction createTransaction(TransactionCreateDTO dto) {
         if (!assetService.existById(dto.getAssetId())){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Asset not found v1.0");
@@ -100,6 +103,34 @@ public class TransactionService {
         transactionRepository.deleteById(id);
     }
 
+
+    public Map<String, BigDecimal> getSumByTag(){
+
+        List<Transaction> transactions = transactionRepository.findAll();
+
+        Map<String, BigDecimal> sumsByTagId = transactions.stream()
+                .collect(Collectors.groupingBy(
+                        Transaction::getTagId,
+                        Collectors.mapping(
+                                Transaction::getAmount,
+                                Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)
+                        )
+                ));
+
+        return sumsByTagId.entrySet().stream()
+                .collect(Collectors.toMap(
+                        e -> {
+                            try {
+                                return tagService.findById(e.getKey()).getName();
+                            } catch (ResponseStatusException ex) {
+                                // если тега нет — используем id как fallback
+                                return e.getKey();
+                            }
+                        },
+                        Map.Entry::getValue,
+                        BigDecimal::add
+                ));
+    }
 
 
     // Ручной маппинг
